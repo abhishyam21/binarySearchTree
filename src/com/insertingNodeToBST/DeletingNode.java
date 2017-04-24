@@ -28,13 +28,15 @@ public class DeletingNode {
     }
 
     private BinarySearchTree delete(BinarySearchTree root, BinarySearchTree prevNode) {
+        //if the node is leaf node
         if (root.getLeftNode() == null && root.getRightNode() == null) {
+            //check if leaf is right or left and set the corresponding child to null
             if (prevNode.getLeftNode().equals(root)) {
                 prevNode.setLeftNode(null);
             } else if (prevNode.getRightNode().equals(root)) {
                 prevNode.setRightNode(null);
             }
-        } else {
+        } else {//if the node is root with both the child's existing
             if (root.getLeftNode() != null && root.getRightNode() != null) {
                 BinarySearchTree maxOfLeftSubTree = root.getLeftNode();
                 while (maxOfLeftSubTree.getRightNode() != null) {
@@ -42,19 +44,14 @@ public class DeletingNode {
                 }
                 root.setData(maxOfLeftSubTree.getData());
                 root = delete(maxOfLeftSubTree, root);
-            } else if (root.getLeftNode() != null || root.getRightNode() != null) {
+            } else //if only one of the child is existing
+                if (root.getLeftNode() != null || root.getRightNode() != null) {
                 if (root.equals(prevNode.getRightNode())) {
                     prevNode.setRightNode(root.getRightNode());
                 } else if (root.equals(prevNode.getLeftNode())) {
                     prevNode.setLeftNode(root.getLeftNode());
                 }
-            }/*else if(root.getRightNode() != null){
-                if(root.equals(prevNode.getRightNode())){
-                        prevNode.setRightNode(root.getRightNode());
-                }else if(root.equals(prevNode.getLeftNode())){
-                       prevNode.setLeftNode(root.getLeftNode());
-                }
-          }*/
+            }
         }
         return root;
     }
